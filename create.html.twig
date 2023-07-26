@@ -1,30 +1,72 @@
 {% extends 'base.html.twig' %}
-{#{% extends 'base.html.twig' %}#}
 {% block body %}
     <div class="container mt-5">
 
         <ul class="list-group">
-            <li class="list-group-item" style="background-color: #505050"><h2 style="color: white; text-align: center">Create Category</h2></li>
+            <li class="list-group-item" style="background-color: #505050"><h2 style="color: white; text-align: center">Create Product</h2></li>
             <li class="list-group-item">
-                {{ form_start(form) }}
-                <div class="form-group">
-                    <label for="CatName"><strong>Name:</strong></label>
-                    {{ form_widget(form.CatName,{
-                        'attr':{
-                            'class':'form-control'
+    {{ form_start(form) }}
+    <div class="form-group">
+        <label for="category"><strong>Category</strong></label>
+        {{ form_widget(form.category,{
+            'attr':{
+                'class':'form-control'
+            }
+        }) }}
+    </div>
+    <div class="form-group">
+        <label for="category"><strong>Product Name:</strong></label>
+        {{ form_widget(form.name,{
+            'attr':{
+                'class':'form-control',
+                'placeholder': 'Product name'
+            }
+        }) }}
+    </div>
+    <div class="form-group">
+        <label for="category"><strong>Price:</strong></label>
+        {{ form_widget(form.price,{
+            'attr':{
+                'class':'form-control',
+                'placeholder': 'Price'
+            }
+        }) }}
+    </div>
+    <div class="form-group">
+        <label for="category"><strong>Quantity:</strong></label>
+        {{ form_widget(form.quantity,{
+            'attr':{
+                'class':'form-control',
+                'placeholder': 'Quantity'
+            }
+        }) }}
+    </div>
+    <div class="form-group">
+        <label for="description"><strong>Description:</strong></label>
+        {{ form_widget(form.description,{
+            'attr':{
+                'class':'form-control',
+                'placeholder': 'Description'
+            }
+        }) }}
+    </div>
 
-                        }
-                    }) }}
-                    <div class="form-group">
-                        <label for="due_date">Image</label>
-                        {{ form_widget(form.logoImage,{
+    <div class="form-group">
+        <label for="due_date"><strong>Date</strong></label>
+        {{ form_widget(form.date,{
+            'attr':{
+                'class':'form-control'
+            }
+        }) }}
+    </div><hr>
+    <div class="form-group">
+        <label for="due_date">Image</label>
+        {{ form_widget(form.productImage,{
 
-                        }) }}
-                    </div><br>
-                <input type="submit" name="create_category" value="Success" class="btn btn-success btn btn-primary" style="float: right"/>
-                {{ form_end(form) }}
-            </li>
-
-        </ul></div> <br><br><br><br><br><br><br><br><br>
-
+        }) }}
+    </div>
+    <input type="submit" name="create_product" value="Success" class="btn btn-success btn btn-primary" style="float: right"/>
+    {{ form_end(form) }}
+    </li>
+    </ul></div> <br><br><br><br><br><br><br><br><br>
 {% endblock %}

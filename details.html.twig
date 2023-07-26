@@ -2,169 +2,275 @@
 
 {% block body %}
 
-<br><br>
-    <div class="container-fluid mt-3">
-        <div class="row">
-        <div class="col-sm-3"><ul class="list-group">
-                <li class="list-group-item">
-    <div class="bs-example" data-example-id="striped-table">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Category</th>
-
-            </tr>
-            </thead>
-            <tbody><ul class="nav">
-
-            {% for category in categories %}
-                <tr>
-                    <th scope="row">{{ category.id }}</th>
-                        <td><a href="{{path('productByCat',{'id':category.id})}} " class='nav-link button button5' style="border:2px solid Gray;text-align: center">{{ category.catname }}</a></td>
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <td><a href="{{path('category_edit',{'id':category.id})}} " class='nav-link button button1' style="border:2px solid MediumSeaGreen;text-align: center">Edit</a></td>
-                       <td><a href="{{ path('category_delete', {'id': category.id}) }} "class='nav-link button button3' style="border:2px solid Red;text-align: center">Delete</a></td>
-                    {% endif %}
-                </tr>
-            {% endfor %}
-            </ul>
-            </tbody>
-
-        </table>
-        <table class="table table-striped"><tbody><tr><td><a href="{{path('category_details')}}" class='nav-link button button4' style="text-align: center">All Category</a></td></tr></tbody></table>
-
-        <!-- Carousel -->
-        <div id="demo" class="carousel slide" data-bs-ride="carousel">
-
-            <!-- Indicators/dots -->
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-                <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-                <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
-                <button type="button" data-bs-target="#demo" data-bs-slide-to="3"></button>
-                <button type="button" data-bs-target="#demo" data-bs-slide-to="4"></button>
-                <button type="button" data-bs-target="#demo" data-bs-slide-to="5"></button>
-                <button type="button" data-bs-target="#demo" data-bs-slide-to="6"></button>
-            </div>
-
-            <!-- The slideshow/carousel -->
-            <div class="carousel-inner" style="box-sizing: border-box; padding: 0;max-width: 450px; margin: 0 auto;
-   width: 100%; position: relative;">
-                <div class="carousel-item active">
-                    <a href="/"><img src="{{ asset('uploads/image/manga1.png')}}"  class="d-block w-100" style="height: 500px;"></a>
-                </div>
-                <div class="carousel-item">
-                    <a href="/"><img src="{{ asset('uploads/image/manga2.jpg')}}"  class="d-block w-100" style="height: 500px"></a>
-                </div>
-            </div>
-            <!-- Left and right controls/icons -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-            </button>
-        </div>
-
-    </div></li>
-            </ul></div>
-
-
-            <div class="col-sm-9">
-                <div class="container mt-3">
-                    <div class="row">
-                        {% for product in products %}
-                        <div class="col-md-3">
-                            <div class="card zoom-effect" style="width: 310px; border: none;"> {# Loại bỏ viền đen xung quanh card #}
-                                <div class="card-body" style="height: 570px;"> {# Đặt chiều cao cố định cho card-body #}
-                                    <a href="{{ path('product_details', {'id': product.id}) }}" style="text-decoration: none; color: inherit;"> {# Bấm vào card để mở trang sản phẩm #}
-                                        <img src="{{ asset('uploads/image/' ~ product.productImage) }}" class="card-img-top" height="400px" width="250px" alt="Product Image">
-                                        <br><br>
-                                        <h4 style="height: 70px; overflow: hidden; font-size: 18px;">{{ product.name }}</h4> {# Đặt chiều cao cố định và ẩn overflow cho tiêu đề #}
-                                        <div class="row">
-                                            <div class="col">
-                                <span style="font-size: 20px">
-                                    <strong style="color: red">{{ product.price }}đ</strong>
-                                </span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div><br>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <br>
-                </div>
-            </div>
-    </div></div>
-<br><br><br><br>
     <style>
-        .zoom-effect img {
-            transition: transform 2s ease;
+        body {
+            font-family: Verdana, sans-serif;
+            margin: 0;
         }
 
-        .zoom-effect:hover img {
-            transform: scale(1.1);
+        * {
+            box-sizing: border-box;
         }
-        .button {
-             /* Green */
-            border: none;
 
-            transition-duration: 0.4s;
+        .row > .column {
+            padding: 0 8px;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .column {
+            float: left;
+            width: 40%;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: black;
+        }
+
+        /* Modal Content */
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        /* The Close Button */
+        .close {
+            color: white;
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #999;
+            text-decoration: none;
             cursor: pointer;
         }
 
-        .button1 {
-
-            color: black;
-            border: 2px solid #28B463;
+        .mySlides {
+            display: none;
         }
 
-        .button1:hover {
-            background-color: #28B463;
-            color: white;
+        .cursor {
+            cursor: pointer;
         }
 
-        .button2 {
-            background-color: white;
-            color: black;
-            border: 2px solid #008CBA;
+
+        img {
+            margin-bottom: -4px;
+
         }
 
-        .button2:hover {
-            background-color: #008CBA;
-            color: white;
+        .demo {
+            opacity: 0.6;
         }
 
-        .button3 {
 
-            color: black;
-            border: 2px solid #CB4335;
+        img.hover-shadow {
+            transition: 0.3s;
         }
 
-        .button3:hover {
-            background-color: #CB4335;
-            color: white;
+        .hover-shadow:hover {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
 
-        .button4 {
-            color: black;
-            border: 0 solid #e7e7e7;
-        }
-
-        .button4:hover {background-color: #717D7E;
-            color: white;}
-
-        .button5 {
-
-            color: black;
-            border: 2px solid #555555;
-        }
-
-        .button5:hover {
-            background-color: #555555;
-            color: white;
-        }
 
     </style>
+
+    <div id="myModal" class="modal">
+        <span class="close cursor" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+
+            <div class="mySlides">
+                <img src="{{ asset('uploads/image/' ~ products.productImage)}}" style="width:100%">
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-9">
+    <div class="container mt-5">
+        <ul class="list-group">
+            <li class="list-group-item">
+        <a class="row column">
+            <img class=" btn hover-shadow cursor"
+                 src="{{ asset('uploads/image/' ~ products.productImage)}}" height="400px" onclick="openModal();currentSlide(1)">
+           </a><span style="float: right; width:67%; height: 300px;"><h3><b>{{ products.name }}</b></h3>
+                <hr class="navbar-nav" width="400px" align="left" margin-left="200px"><br><b style="color: #FF8C00"><big><span style="font-size:20px">{{ products.price }}đ</span></big></b>
+               <br><br> <hr class="navbar-nav" width="400px" align="left" margin-left="200px"><a><span style="font-size:13px"><b>Quantity: </b>{{ products.quantity }}</span></a>
+                    <br><a><span style="font-size:13px"><b>Due: </b>{{ products.date|date('F j,Y, g:i a') }}</span></a><br><br>
+                {{ form_start(form) }}
+                    <div class="form-group" style="display: none;">
+                        {{ form_widget(form.quantity, {'attr': {'class': 'hidden', 'value': '1'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_widget(form.add, {'attr': {'class': 'btn btn-warning', 'style': 'width: 100%'}}) }}
+                    </div>
+                {{ form_end(form) }}
+                    {% if is_granted('ROLE_ADMIN') %}
+          <span style="float: right"><a href="{{path('product_edit',{'id':products.id})}} " class='btn btn-outline-secondary btn-sm '>Edit</a>
+                        <a href="{{ path('product_delete', {'id': products.id}) }} " class='btn btn-outline-danger btn-sm'>Delete</a></span></span>
+                {% endif %}
+            </li>
+    </ul><br><br>
+        <ul class="list-group">
+            <li class="list-group-item" style="background-color: #363636"><a style="color: white">Description</a></li>
+            <li class="list-group-item">
+                <p style="white-space: pre-wrap;">{{ products.description }}</p>
+            </li>
+        </ul>
+
+    </div></div>
+        <div class="col-sm-3">
+            <br><br><ul class="list-group">
+                <li class="list-group-item" style="background-color: #363636">
+            <h4 style="color: white; width: 50%;height: 50%;margin-right: 55px;margin-left: auto;margin-top: auto;margin-bottom: auto">Suggestion</h4></li>
+                <li class="list-group-item">
+            <!-- Carousel -->
+            <div id="demo" class="carousel slide" data-bs-ride="carousel">
+                <!-- The slideshow/carousel -->
+                <div class="carousel-inner" style="box-sizing: border-box; padding: 0;max-width: 450px; margin: 0 auto;
+   width: 100%; position: relative;">
+                    <div class="carousel-item active">
+                        <a href="/"><img src="{{ asset('uploads/image/manga1.webp')}}"  class="d-block w-200" style="height: 500px;"></a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="/"><img src="{{ asset('uploads/image/manga2.jpg')}}"  class="d-block w-100" style="height: 500px"></a>
+                    </div>
+                </div>
+
+                <!-- Left and right controls/icons -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+
+                </button>
+            </div></li>
+
+            </ul>
+        </div>
+    </div>
+    <br><br><br><br><br><br><br><br><br><br><br>
+
+
+    <style>
+        html {
+            box-sizing: border-box;
+        }
+
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+
+        .column {
+            float: left;
+            width: 33.3%;
+            margin-bottom: 16px;
+            padding: 0 8px;
+        }
+
+        @media screen and (max-width: 650px) {
+            .column {
+                width: 100%;
+                display: block;
+            }
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            padding: 0 16px;
+        }
+
+        .container::after, .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .title {
+            color: grey;
+        }
+
+        .button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+    </style>
+
+
+    <script>
+        function openModal() {
+            document.getElementById("myModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+            var captionText = document.getElementById("caption");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";
+            dots[slideIndex-1].className += " active";
+            captionText.innerHTML = dots[slideIndex-1].alt;
+        }
+    </script>
 {% endblock %}

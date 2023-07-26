@@ -1,0 +1,39 @@
+{% block body %}
+
+    <div class="container mt-3">
+        {% for flash_message in app.session.flashBag.get('notice') %}
+            <div class="alert alert-success">
+                <strong>{{ flash_message }}!!!</strong> A product has been added to the list.!!!
+            </div>
+        {% endfor %}
+        {% for flash_message in app.session.flashBag.get('error') %}
+            <div class="alert alert-danger">
+                <strong>{{ flash_message }}!!!</strong> A product has been removed from the list.!!!
+            </div>
+        {% endfor %}</div>
+
+    <footer id="footer" class="bg text-black py-5" style="background: white">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-4 col-12">
+                    <h4 class="font-rubik font-size-20">Newslatter</h4>
+                    <form class="form-row">
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Email *">
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary mb-2">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .font-rale {
+            text-decoration: none;
+        }
+    </style>
+{% endblock %}
