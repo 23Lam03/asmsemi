@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{#{% extends 'base.html.twig' %}#}
+{% block body %}
+    <div class="container mt-5">
+
+        <ul class="list-group">
+            <li class="list-group-item" style="background-color: #505050"><h2 style="color: white; text-align: center">Create Category</h2></li>
+            <li class="list-group-item">
+                {{ form_start(form) }}
+                <div class="form-group">
+                    <label for="CatName"><strong>Name:</strong></label>
+                    {{ form_widget(form.CatName,{
+                        'attr':{
+                            'class':'form-control'
+
+                        }
+                    }) }}
+                    <div class="form-group">
+                        <label for="due_date">Image</label>
+                        {{ form_widget(form.logoImage,{
+
+                        }) }}
+                    </div><br>
+                <input type="submit" name="create_category" value="Success" class="btn btn-success btn btn-primary" style="float: right"/>
+                {{ form_end(form) }}
+            </li>
+
+        </ul></div> <br><br><br><br><br><br><br><br><br>
+
+{% endblock %}

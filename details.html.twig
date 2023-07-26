@@ -1,0 +1,170 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<br><br>
+    <div class="container-fluid mt-3">
+        <div class="row">
+        <div class="col-sm-3"><ul class="list-group">
+                <li class="list-group-item">
+    <div class="bs-example" data-example-id="striped-table">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Category</th>
+
+            </tr>
+            </thead>
+            <tbody><ul class="nav">
+
+            {% for category in categories %}
+                <tr>
+                    <th scope="row">{{ category.id }}</th>
+                        <td><a href="{{path('productByCat',{'id':category.id})}} " class='nav-link button button5' style="border:2px solid Gray;text-align: center">{{ category.catname }}</a></td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td><a href="{{path('category_edit',{'id':category.id})}} " class='nav-link button button1' style="border:2px solid MediumSeaGreen;text-align: center">Edit</a></td>
+                       <td><a href="{{ path('category_delete', {'id': category.id}) }} "class='nav-link button button3' style="border:2px solid Red;text-align: center">Delete</a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </ul>
+            </tbody>
+
+        </table>
+        <table class="table table-striped"><tbody><tr><td><a href="{{path('category_details')}}" class='nav-link button button4' style="text-align: center">All Category</a></td></tr></tbody></table>
+
+        <!-- Carousel -->
+        <div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+            <!-- Indicators/dots -->
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+                <button type="button" data-bs-target="#demo" data-bs-slide-to="3"></button>
+                <button type="button" data-bs-target="#demo" data-bs-slide-to="4"></button>
+                <button type="button" data-bs-target="#demo" data-bs-slide-to="5"></button>
+                <button type="button" data-bs-target="#demo" data-bs-slide-to="6"></button>
+            </div>
+
+            <!-- The slideshow/carousel -->
+            <div class="carousel-inner" style="box-sizing: border-box; padding: 0;max-width: 450px; margin: 0 auto;
+   width: 100%; position: relative;">
+                <div class="carousel-item active">
+                    <a href="/"><img src="{{ asset('uploads/image/manga1.png')}}"  class="d-block w-100" style="height: 500px;"></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="/"><img src="{{ asset('uploads/image/manga2.jpg')}}"  class="d-block w-100" style="height: 500px"></a>
+                </div>
+            </div>
+            <!-- Left and right controls/icons -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+            </button>
+        </div>
+
+    </div></li>
+            </ul></div>
+
+
+            <div class="col-sm-9">
+                <div class="container mt-3">
+                    <div class="row">
+                        {% for product in products %}
+                        <div class="col-md-3">
+                            <div class="card zoom-effect" style="width: 310px; border: none;"> {# Loại bỏ viền đen xung quanh card #}
+                                <div class="card-body" style="height: 570px;"> {# Đặt chiều cao cố định cho card-body #}
+                                    <a href="{{ path('product_details', {'id': product.id}) }}" style="text-decoration: none; color: inherit;"> {# Bấm vào card để mở trang sản phẩm #}
+                                        <img src="{{ asset('uploads/image/' ~ product.productImage) }}" class="card-img-top" height="400px" width="250px" alt="Product Image">
+                                        <br><br>
+                                        <h4 style="height: 70px; overflow: hidden; font-size: 18px;">{{ product.name }}</h4> {# Đặt chiều cao cố định và ẩn overflow cho tiêu đề #}
+                                        <div class="row">
+                                            <div class="col">
+                                <span style="font-size: 20px">
+                                    <strong style="color: red">{{ product.price }}đ</strong>
+                                </span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div><br>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <br>
+                </div>
+            </div>
+    </div></div>
+<br><br><br><br>
+    <style>
+        .zoom-effect img {
+            transition: transform 2s ease;
+        }
+
+        .zoom-effect:hover img {
+            transform: scale(1.1);
+        }
+        .button {
+             /* Green */
+            border: none;
+
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+
+        .button1 {
+
+            color: black;
+            border: 2px solid #28B463;
+        }
+
+        .button1:hover {
+            background-color: #28B463;
+            color: white;
+        }
+
+        .button2 {
+            background-color: white;
+            color: black;
+            border: 2px solid #008CBA;
+        }
+
+        .button2:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+
+        .button3 {
+
+            color: black;
+            border: 2px solid #CB4335;
+        }
+
+        .button3:hover {
+            background-color: #CB4335;
+            color: white;
+        }
+
+        .button4 {
+            color: black;
+            border: 0 solid #e7e7e7;
+        }
+
+        .button4:hover {background-color: #717D7E;
+            color: white;}
+
+        .button5 {
+
+            color: black;
+            border: 2px solid #555555;
+        }
+
+        .button5:hover {
+            background-color: #555555;
+            color: white;
+        }
+
+    </style>
+{% endblock %}
